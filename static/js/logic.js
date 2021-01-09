@@ -16,12 +16,12 @@ var myMap = L.map("map", {
   var link = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
   d3.json(link, function(data) {
       function getColor(i){
-        return i > 90 ? "#EA2C2C" :
-        i > 70  ? "#EA822C" :
-        i > 50  ? "#EE9C00" :
-        i > 30  ? "#EECC00" :
-        i > 10   ?  "#D4EE00" :
-                 "#98EE00";
+        return i > 90 ? "#F30" :
+        i > 70  ? "#F60" :
+        i > 50  ? "#F90" :
+        i > 30  ? "#FC0" :
+        i > 10   ?  "#FF0" :
+                 "#9F3";
       }
   
     L.geoJson(data, {
@@ -29,7 +29,7 @@ var myMap = L.map("map", {
             return L.circleMarker(latlng, {
                 radius: (feature.properties.mag)*4,
                 fillColor: getColor(feature.geometry.coordinates[2]),
-                color: "#000",
+                //color: "#000",
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
@@ -40,15 +40,24 @@ var myMap = L.map("map", {
 
     }
   }).addTo(myMap);
+  function getColors(i){
+    return i > 5 ? "#F30" :
+    i > 4  ? "#F60" :
+    i > 3  ? "#F90" :
+    i > 2  ? "#FC0" :
+    i > 1   ?  "#FF0" :
+             "#9F3";
+  }
+
   var legend = L.control({ position: 'bottomright' });
   legend.onAdd = function (myMap) {
     var div = L.DomUtil.create('div', 'info legend'),
       grades = [0, 1, 2, 3, 4, 5],
       labels = [];
-    // loop through density intervals and generate a label with a colored square for each interval
+    
     for (var i = 0; i < grades.length; i++) {
       div.innerHTML +=
-        '<i style="background:' + getColor(grades[i] + 1) + '"></i> ' +
+        '<i style="background:' + getColors(grades[i] + 1) + '"></i> ' +
         grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
     }
     return div;
