@@ -28,8 +28,7 @@ var myMap = L.map("map", {
         pointToLayer: function (feature, latlng) {
             return L.circleMarker(latlng, {
                 radius: (feature.properties.mag)*4,
-                fillColor: getColor(feature.geometry.coordinates[2]),
-                //color: "#000",
+                fillColor: getColor(feature.geometry.coordinates[2])
                 weight: 1,
                 opacity: 1,
                 fillOpacity: 0.8
